@@ -1,28 +1,60 @@
-import React, { useState } from 'react'
-import Web3 from 'web3'
+import React, { useState, useEffect } from 'react'
 
 import Navbar from './components/Navbar'
 import Balances from './components/Balances'
 
+import { useWeb3React } from '@web3-react/core'
+
+
 const App = () => {
-  const [address, setAddress] = useState()
+  const context = useWeb3React()
+  
+  const {
+    connector,
+    library,
+    chainId,
+    account,
+    activate,
+    deactivate,
+    active,
+    error
+  } = context
 
 
-  const ethEnabled = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      const addresses = await window.ethereum.enable();
+  const [ethBalance, setEthBalance] = useState()
 
-      setAddress(addresses[0])
-      return true;
+  useEffect(() => {
+    console.log('running')
+    if (library && account) {
+      let stale = false;
+
+      library
+        .getBalance(account)
+        .then(balance => {
+          if (!stale) {
+            setEthBalance(balance);
+          }
+        })
+        .catch(() => {
+          if (!stale) {
+            setEthBalance(null);
+          }
+        })
+
+      return () => {
+        stale = true;
+        setEthBalance(undefined);
+      }
     }
-    return false;
-  }
+  }, [library, account, chainId])
 
   return (
     <>
-      <Navbar ethEnabled={ethEnabled} address={address} />
-      <Balances address={address}  />
+   
+
+        <Navbar account={account} activate={activate} active={active} />
+        <Balances  ethBalance={ethBalance} />
+
     </>
   )
 }
