@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Split } from '@aragon/ui'
+import { formatEther } from '@ethersproject/units'
 
 
 const Balances = (props) => {
@@ -27,27 +28,16 @@ const Balances = (props) => {
     
     let linkBalance
 
-    if (props.enabled) {
-     // Get ERC20 Token contract instance
-     let contract = window.web3.eth.Contract(minABI).at(props.address);
-       // Call balanceOf function
-     contract.balanceOf(props.address, (error, balance) => {
-       // Get decimals
-       contract.decimals((error, decimals) => {
-         // calculate a balance
-         balance = balance.div(10**decimals);
-         linkBalance= balance
-         });
-       });
-    }
-
-  
 
   return (
       <>
         <Box>
             <div>hey! here's your wallets link balance, fetched straight from ethereum.</div>
-            <div> (ngmi) LINK</div>
+            <div> {props.ethBalance === undefined
+            ? "..."
+            : props.ethBalance === null
+            ? "Error"
+            : `Ξ${parseFloat(formatEther(props.ethBalance)).toPrecision(4)}`} ETH</div>
         </Box>
       </>
   )
