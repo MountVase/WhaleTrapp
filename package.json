@@ -2,7 +2,7 @@
   "name": "whaletrapp",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000/",
+  "proxy": "http://localhost:8000/",
   "dependencies": {
     "@aragon/ui": "^1.7.0",
     "@ethersproject/providers": "^5.1.2",
@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start-api": "cd api && venv/bin/flask run --no-debugger",
-    "build": "react-scripts build && cd api && venv/bin/flask run --no-debugger",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
