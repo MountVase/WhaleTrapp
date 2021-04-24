@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 cors = CORS(app)
 
+# serve static html pages from here?
 @app.route('/api/getToken/<address>/', methods=['GET'])
 def balance(address):
      
