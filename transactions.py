@@ -61,14 +61,10 @@ def Transactions(address):
 
 
     # Create a dummy variable and get Wallets token balances
-    for ind, row in df.iterrows():
-        if row["Status"] == "Sending":
-            df.loc[ind, "Dumb"] = row["Value"] * -1
-        else:
-            df.loc[ind, "Dumb"] = row["Value"] * 1
-    print(df.head(60))
-
-    yolo = df.groupby("Symbol").Dumb.sum() # Yolo == Token balances 
+    df.loc[df["Status"] == "Sending", "Value"] *=-1
+    wallet = df.groupby("Symbol").Value.sum().reset_index()         # Yolo == Token balances 
+    wallet = wallet[wallet["Value"] > 0.0001] # Get rid of most dust values
+    print(wallet)
 
     for x in yolo: # Just to check things out, will need to filter out dust.
         print(x)
