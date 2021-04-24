@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 
 import Navbar from './components/Navbar'
 import Balances from './components/Balances'
-import Addresses from './components/Addresses'
+import Whales from './components/Whales'
+import WhalePreview from './components/WhalePreview'
 
 import { useWeb3React } from '@web3-react/core'
 
@@ -55,7 +56,8 @@ const App = () => {
 
         <Navbar account={account} activate={activate} active={active} />
         <Balances  ethBalance={ethBalance} />
-	<Addresses />
+	<Whales />
+        <WhalePreview />
     </>
   )
 }
