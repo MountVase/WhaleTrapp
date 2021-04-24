@@ -4,7 +4,7 @@ import { Table, TableHeader, TableRow, TableCell, Link, TextInput, Button, Text,
 // this should be fetched for specific addresses
 const initialList = ["0x","0xA14964479Ebf9cD336011ad80652b08CD83dFE3A", "0xD90626F63Ddb82f39634DA594D65826120DaC01e", "0x0C18Af6D73553C481993005E78b0651dCf9C7bA3"]
 
-const Addresses = () => {
+const Whales = () => {
   const [text, setText] = useState('')
   const [whales, setWhales] = useState(initialList)
  
@@ -40,4 +40,4 @@ const Addresses = () => {
        )
 }
 
-export default Addresses
+export default Whales
