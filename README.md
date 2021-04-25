@@ -1,4 +1,22 @@
-# Getting Started with Create React App
+## Instructions for locally running backend or frontend (or both!)
+
+# Backend
+
+First, create a virtual environment where you install all the required dependencies (highly recommended!).
+Then just run.
+
+```
+python3 -m venv venv
+source venv/bin/activate
+
+gunicorn api:app
+```
+
+boom! 
+
+
+
+# Frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
