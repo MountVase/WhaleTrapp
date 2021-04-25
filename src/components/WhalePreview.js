@@ -7,8 +7,8 @@ import { useParams } from 'react-router-dom'
 // also, TODO:  react-router-dom for specific Whale Routes. 
 // DataView component might be helpful
 
-//const baseUrl = 'https://whale-trapp.herokuapp.com/'
-const baseUrl = 'http://localhost:5000/'
+const baseUrl = 'https://whale-trapp.herokuapp.com/'
+//const baseUrl = 'http://localhost:5000/'
 
 const WhalePreview = () => {
   const [data, setData] = useState([])
