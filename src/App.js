@@ -4,6 +4,12 @@ import Navbar from './components/Navbar'
 import Balances from './components/Balances'
 import Whales from './components/Whales'
 import WhalePreview from './components/WhalePreview'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom"
 
 import { useWeb3React } from '@web3-react/core'
 
@@ -52,12 +58,23 @@ const App = () => {
 
   return (
     <>
-   
+      <Router>
+        <Switch>
+	  <Route path="/whale/:id">
+	    <Navbar account={account} activate={activate} active={active} />
+            <WhalePreview />
+	  </Route>
 
-        <Navbar account={account} activate={activate} active={active} />
-        <Balances  ethBalance={ethBalance} />
-	<Whales />
-        <WhalePreview />
+          <Route path="/">
+            <Navbar account={account} activate={activate} active={active} />
+            <Balances  ethBalance={ethBalance} />
+            <Whales />
+          </Route>
+
+	
+	</Switch>
+      </Router>
+    
     </>
   )
 }

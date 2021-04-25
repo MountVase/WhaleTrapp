@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { Header, Button, Modal, IdentityBadge } from '@aragon/ui'
 import IconEthereum from '@aragon/ui/dist/IconEthereum'
 
+import { Link } from 'react-router-dom'
+
 import { injected } from './web3logic/connectors'
 
 
 const LeftSide = () => (
     <>
       <Header primary="WhaleTrapp" />
-      <img src="whale.png" width={64} height={64} />
+      <Link to="/"> <img src="whale.png" width={64} height={64} /></Link>
     </>
 )
   
