@@ -3,15 +3,13 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 
 import { NetworkConnector } from '@web3-react/network-connector'
 
-const NETWORK_URL = process.env.REACT_APP_NETWORK_URL
+const NETWORK_URL = process.env.REACT_APP_NETWORK_URL ?? "https://mainnet.infura.io/v3/b6611b1efc64497fa183f7dd59608581"
+
 // const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
 // const WALLETCONNECT_BRIDGE_URL = process.env.REACT_APP_WALLETCONNECT_BRIDGE_URL
 
 export const NETWORK_CHAIN_ID  = parseInt(process.env.REACT_APP_CHAIN_ID ?? '1')
 
-if (typeof NETWORK_URL === 'undefined') {
-  throw new Error(`REACT_APP_NETWORK_URL must be a defined environment variable`)
-}
 
 export const network = new NetworkConnector({
   urls: { [NETWORK_CHAIN_ID]: NETWORK_URL }
