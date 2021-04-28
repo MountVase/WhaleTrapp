@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Table, TableHeader, TableRow, TableCell, TextInput, Button, Text, CircleGraph } from '@aragon/ui'
-import { Link } from 'react-router-dom'
-
+import { Table, TableHeader, TableRow, TableCell, TextInput, Button, Text, CircleGraph, AddressField } from '@aragon/ui'
+import { Link, useHistory } from 'react-router-dom'
+import styled from "styled-components"
 
 // this should be fetched for specific addresses
-const initialList = ["0x","0xA14964479Ebf9cD336011ad80652b08CD83dFE3A", "0xD90626F63Ddb82f39634DA594D65826120DaC01e", "0x0C18Af6D73553C481993005E78b0651dCf9C7bA3"]
+const initialList = ["0xA14964479Ebf9cD336011ad80652b08CD83dFE3A", "0xD90626F63Ddb82f39634DA594D65826120DaC01e", "0x0C18Af6D73553C481993005E78b0651dCf9C7bA3"]
+
+const WhaleWrapper = styled.div`
+  z-index: 5000;
+  background-color: beige;
+
+  cursor: pointer; 
+  &:hover {
+    background-color: red;
+  }
+`
 
 const Whales = () => {
   const [text, setText] = useState('')
   const [whales, setWhales] = useState(initialList)
- 
+  
+  const history = useHistory()
+
   const handleClick = () => {
     setWhales(whales => [...whales, text])
   }
@@ -32,7 +44,9 @@ const Whales = () => {
 	  return (
 	    <TableRow>
    	      <TableCell>
-		<Link to={`/whale/${address}`}>{address}</Link>
+             <WhaleWrapper onClick={() => history.push(`/whale/${address}`)}>
+            <AddressField address={address} />
+            </WhaleWrapper>
 	      </TableCell>
 	    </TableRow>
 	  )

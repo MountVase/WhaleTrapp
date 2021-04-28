@@ -4,6 +4,8 @@ import Navbar from './components/Navbar'
 import Balances from './components/Balances'
 import Whales from './components/Whales'
 import WhalePreview from './components/WhalePreview'
+import TokenOverview from './components/TokenOverview'
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -60,13 +62,15 @@ const App = () => {
     <>
       <Router>
         <Switch>
-	  <Route path="/whale/:id">
-	    <Navbar account={account} activate={activate} active={active} />
+	      <Route path="/whale/:id">
+	        <Navbar account={account} activate={activate} active={active} />
             <WhalePreview />
-	  </Route>
+	      </Route>
 
           <Route path="/">
             <Navbar account={account} activate={activate} active={active} />
+
+            <TokenOverview />
             <Balances  ethBalance={ethBalance} />
             <Whales />
           </Route>

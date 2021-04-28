@@ -45,7 +45,9 @@ def balances(address):
         time_stamp = t.get("timeStamp")
         time = datetime.datetime.fromtimestamp(int(time_stamp)).strftime("%Y-%d-%m %H:%M:%S")
         confirmations = t.get("confirmations")
+        contract_address = t.get("contractAddress")
 
+        status = ''
         if tx_from == address.lower(): # problems here?
             status = "Sending"
         else:
@@ -59,7 +61,7 @@ def balances(address):
         else:
             conf = "Pending"
 
-        holdings.append({"Token": token, "Symbol": symbol, "Status": status, "From": tx_from, "To": tx_to, "TRX": conf, "Value": eth_value, "Date": time})
+        holdings.append({"Token": token, "Symbol": symbol, "Status": status, "From": tx_from, "To": tx_to, "TRX": conf, "Value": eth_value, "Date": time, "Contract": contract_address })
 
     df = pd.DataFrame(holdings)
      
@@ -67,6 +69,7 @@ def balances(address):
     df.loc[df["Status"] == "Sending", "Value"] *=-1
     wallet = df.groupby("Symbol").Value.sum().reset_index() 
     wallet = wallet[wallet["Value"] > 0.0001] # Get rid of most dust values
+    wallet["Contract"] = df["Contract"]
 
     app.logger.info('wallet: ', wallet)
 
