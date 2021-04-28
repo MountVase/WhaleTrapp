@@ -90,6 +90,20 @@ def balances(address):
 ]
     """
 
+@app.route('/api/getGas/', methods=['GET'])
+def gas():  
+    url = f"https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey={api_key}"
+
+    api_call = requests.get(url)
+    gas = api_call.json()
+
+    gas = gas.get("result")
+    print(gas)
+
+    app.logger.info("gas", gas)
+    return gas
+        
+
 if __name__ == '__main__':
     app.run(debug=True)
 
