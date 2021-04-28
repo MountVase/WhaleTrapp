@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Header, Button, Modal, IdentityBadge } from '@aragon/ui'
 import IconEthereum from '@aragon/ui/dist/IconEthereum'
-
 import { Link } from 'react-router-dom'
+import Gas from './Gas'
 
 import { injected } from './web3logic/connectors'
 
@@ -30,10 +30,12 @@ const Navbar = (props) => {
       if (!props.active) {
         return (
             <>
+     
               <Button onClick={toggleOpen} mode="strong" label="Wallet Connect/Login" />
               <Modal visible={open} onClose={toggleOpen}>
                   <Button mode="positive" label="connect metamask" onClick={() => helperConnect()} icon={<IconEthereum />} display="all"/>
               </Modal>
+              <Gas />
           </>
         )
       } else {

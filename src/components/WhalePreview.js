@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Text, TableRow, TableHeader, TableCell, Link } from '@aragon/ui'
+import { Table, Text, TableRow, Distribution, TableCell, Link } from '@aragon/ui'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { baseUrl } from '../constants'
@@ -11,17 +11,26 @@ import { baseUrl } from '../constants'
 const WhalePreview = () => {
   const [data, setData] = useState([])
   const { id } = useParams()
-	
+
   useEffect(() => {
-    axios.get(`${baseUrl}api/getTokens/${id}/`).then(response => {
+    axios.get(`${baseUrl}/api/getTokens/${id}/`).then(response => {
       setData(response.data)
     })
   }, [])
+
   return (
     <>
+    
+    <Distribution 
+     heading="Token distribution"
+     items={data.slice(0, 5).map(entry => {
+       return { item: entry.Symbol, percentage: `${entry.Value / data.reduce((prev, curr) => prev + curr.Value, 1) * 1000000}`}
+     })}     
+     />
      <Table
-       style={{ width: '30%'}}
-     >
+       style={{ width: '50%'}}
+     > 
+
         {data.map(entry => {
           return (
 	   <>
