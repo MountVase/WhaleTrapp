@@ -102,7 +102,53 @@ def gas():
 
     app.logger.info("gas", gas)
     return gas
+
+@app.route('/api/getTrx/<address>', methods=['GET'])
+def latestTrxs(address):
+    url = f"https://api.etherscan.io/api?module=account&action=tokentx&address={address}&startblock=0&endblock=999999999&sort=desc&apikey={api_key}"
+    
+
+    api_call = requests.get(url)
+    # should we add checking if this call shits the bed^
+    
+    tx = api_call.json().get("result")
+    print(tx)
+    # app.logger.info('damn... thats a lotta transactions...', tx)
+    
+    holdings = []
+
+    for t in tx:
+        token = t.get("tokenName")
+        symbol = t.get("tokenSymbol")
+        value = t.get("value") # returned in WEI, need converting to eth
+        tx_from = t.get("from")
+        tx_to = t.get("to")
+        time_stamp = t.get("timeStamp")
+        time = datetime.datetime.fromtimestamp(int(time_stamp)).strftime("%Y-%d-%m %H:%M:%S")
+        confirmations = t.get("confirmations")
+        contract_address = t.get("contractAddress")
+
+        status = ''
+        if tx_from == address.lower(): # problems here?
+            status = "Sending"
+        else:
+            status = "Receiving"
+
         
+        eth_value = round(Decimal(value)/Decimal("1000000000000000000"), 5)
+        
+        if int(confirmations) >= 16:
+            conf = "Confirmed"
+        else:
+            conf = "Pending"
+
+        holdings.append({"Token": token, "Symbol": symbol, "Status": status, "From": tx_from, "To": tx_to, "TRX": conf, "Value": eth_value, "Date": time, "Contract": contract_address })
+   
+    df = pd.DataFrame(holdings)
+    trx = df.head(10)
+   
+    app.logger.info("Trx", trx)
+    return trx.to_json(orient="records") 
 
 if __name__ == '__main__':
     app.run(debug=True)
