@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Text, TableRow, Distribution, TableCell, Link } from '@aragon/ui'
+import { Table, Text, TableRow, Distribution, TableCell, Link, LoadingRing } from '@aragon/ui'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { baseUrl } from '../constants'
@@ -10,13 +10,21 @@ import { baseUrl } from '../constants'
 
 const WhalePreview = () => {
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
   const { id } = useParams()
 
   useEffect(() => {
     axios.get(`${baseUrl}/api/getTokens/${id}/`).then(response => {
       setData(response.data)
+      setLoading(false)
     })
   }, [])
+  
+  if (loading) {
+    return  (
+     <LoadingRing />
+    )
+  }
 
   return (
     <>
@@ -30,7 +38,7 @@ const WhalePreview = () => {
      <Table
        style={{ width: '50%'}}
      > 
-
+       
         {data.map(entry => {
           return (
 	   <>
