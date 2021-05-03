@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Text, TableRow, Distribution, TableCell, Link, LoadingRing } from '@aragon/ui'
+import { Table, Text, TableRow, Distribution, TableCell, Link } from '@aragon/ui'
 import axios from 'axios'
+import { WindMillLoading } from 'react-loadingg'
 import { useParams } from 'react-router-dom'
 import { baseUrl } from '../constants'
 
@@ -22,7 +23,7 @@ const WhalePreview = () => {
   
   if (loading) {
     return  (
-     <LoadingRing />
+	<WindMillLoading />
     )
   }
 
